@@ -1,0 +1,25 @@
+<UserControl
+    x:Class="MONY.MetricCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MONY">
+    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+            CornerRadius="8" Padding="16,12">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,0,0,3">
+                <FontIcon x:Name="CardIcon" FontSize="16" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock x:Name="CardTitle" Style="{StaticResource BodyStrongTextBlockStyle}"
+                           AutomationProperties.HeadingLevel="Level2" />
+            </StackPanel>
+            <TextBlock Grid.Row="1" x:Name="CardValue" Text="—" FontSize="26" FontWeight="SemiBold"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Grid.Row="2" x:Name="CardDetail" Margin="0,2,0,8"
+                       Style="{StaticResource CaptionTextBlockStyle}" TextTrimming="CharacterEllipsis"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            <TextBlock Grid.Row="3" x:Name="CardTelemetry" Margin="0,0,0,8" TextWrapping="Wrap"
+                       Style="{StaticResource CaptionTextBlockStyle}" />
+            <local:TimeGraph x:Name="Chart" Grid.Row="4" MinHeight="60" AutomationProperties.AccessibilityView="Raw" />
+        </Grid>
+    </Border>
+</UserControl>

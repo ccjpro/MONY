@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>设置 · MONY</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png">
+    <link rel="stylesheet" href="/overview-v5.css">
+    <script src="/locale-v4.js" defer></script>
+    <script src="/alerts-v2.js" defer></script>
+    <script src="/settings.js" defer></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <script src="/pwa.js" defer></script>
+</head>
+<body>
+    <header class="titlebar">
+        <img src="/brand.svg" width="20" height="20" alt="">
+        <span>MONY</span>
+    </header>
+    <main class="settings">
+        <div class="settings-toolbar">
+            <a class="button" href="/">返回性能概览</a>
+            <p id="save-message" role="status"></p>
+        </div>
+        <h1>设置</h1>
+        <form id="settings-form">
+            <section class="card">
+                <h2>设备标识</h2>
+                <div class="setting-row">
+                    <label for="computerName">显示名称</label>
+                    <div class="actions">
+                        <input id="computerName" name="computerName" maxlength="64" placeholder="可选">
+                        <button type="button" data-confirm="computerName">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="preferredIp">标识 IP</label>
+                    <select id="preferredIp" name="preferredIp"></select>
+                </div>
+                <p class="note">标识 IP 用于显示和推荐地址。开启局域网后，服务监听所有接口。</p>
+                <div class="setting-row">
+                    <span>版本号</span>
+                    <span id="app-version">—</span>
+                </div>
+            </section>
+            <section class="card">
+                <h2>外观与窗口</h2>
+                <div class="setting-row">
+                    <label for="desktopTheme">桌面主题</label>
+                    <select id="desktopTheme" name="desktopTheme"><option value="system">跟随 Windows</option><option value="light">浅色</option><option value="dark">深色</option></select>
+                </div>
+                <div class="setting-row">
+                    <label for="webTheme">网页主题</label>
+                    <select id="webTheme" name="webTheme"><option value="system">跟随浏览器</option><option value="light">浅色</option><option value="dark">深色</option></select>
+                </div>
+                <div class="setting-row">
+                    <label for="minimizeTo">最小化时</label>
+                    <select id="minimizeTo" name="minimizeTo"><option value="taskbar">任务栏</option><option value="tray">系统托盘</option></select>
+                </div>
+                <div class="setting-row">
+                    <label for="closeTo">关闭时</label>
+                    <select id="closeTo" name="closeTo"><option value="tray">系统托盘</option><option value="exit">退出程序</option></select>
+                </div>
+                <div class="setting-row">
+                    <label for="startWithWindows">开机自启</label>
+                    <input id="startWithWindows" name="startWithWindows" type="checkbox" role="switch">
+                </div>
+                <p class="note">登录 Windows 后在托盘启动。</p>
+            </section>
+            <section class="card">
+                <h2>显示信息设置</h2>
+                <div class="setting-row">
+                    <label for="language">显示语言</label>
+                    <select id="language" name="language"><option value="system">自动（系统／浏览器）</option><option value="zh-CN">简体中文</option><option value="en">English</option></select>
+                </div>
+                <div class="setting-row">
+                    <label for="showSharedGpuMemory">显示共享显存</label>
+                    <input id="showSharedGpuMemory" name="showSharedGpuMemory" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <span>CPU 温度与功耗</span>
+                    <span class="note">请在桌面应用中授权 Windows UAC。</span>
+                </div>
+            </section>
+            <section class="card">
+                <h2>对接监控</h2>
+                <div class="setting-row">
+                    <label for="remoteAddress">IP 地址</label>
+                    <input id="remoteAddress" name="remoteAddress" type="text" placeholder="127.0.0.1" autocomplete="off">
+                </div>
+                <div class="setting-row">
+                    <label for="remotePort">API 端口</label>
+                    <input id="remotePort" name="remotePort" type="text" inputmode="numeric" value="2727">
+                </div>
+                <div class="setting-row">
+                    <label for="remotePassword">API 密码</label>
+                    <div class="actions">
+                        <input id="remotePassword" name="remotePassword" type="password" autocomplete="new-password" placeholder="可选">
+                        <button id="connect-remote" type="button">连接</button>
+                    </div>
+                </div>
+                <div class="setting-row" id="remote-list-row" hidden>
+                    <label for="remoteList">已连接目标</label>
+                    <div class="actions">
+                        <select id="remoteList" name="remoteList"></select>
+                        <button id="remove-remote" type="button">移除</button>
+                    </div>
+                </div>
+            </section>
+            <section class="card">
+                <h2>Web 页面</h2>
+                <div class="setting-row">
+                    <span>全屏监控</span>
+                    <a class="button" href="/full">打开全屏页</a>
+                </div>
+                <div class="setting-row">
+                    <label for="webEnabled">启用服务</label>
+                    <input id="webEnabled" name="webEnabled" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="webLan">局域网访问</label>
+                    <input id="webLan" name="webLan" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="webPort">监听端口</label>
+                    <div class="actions">
+                        <input id="webPort" name="webPort" type="text" inputmode="numeric" aria-label="WEB 监听端口">
+                        <button type="button" data-confirm="webPort">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="webPassword">网页设置密码</label>
+                    <div class="actions">
+                        <input id="webPassword" name="webPassword" type="password" autocomplete="new-password"
+                               placeholder="新密码">
+                        <button type="button" data-confirm="webPassword">确认</button>
+                        <button type="button" data-clear="webPassword" disabled>清除</button>
+                    </div>
+                </div>
+                <p class="note">设置密码可选。访问设置时登录，浏览器记住授权 1 天。</p>
+                <a id="web-url" class="endpoint" hidden></a>
+                <p id="web-status" class="note endpoint"></p>
+            </section>
+            <section class="card">
+                <h2>数据查询 API</h2>
+                <div class="setting-row">
+                    <label for="apiEnabled">启用服务</label>
+                    <input id="apiEnabled" name="apiEnabled" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="apiLan">局域网访问</label>
+                    <input id="apiLan" name="apiLan" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="apiPort">监听端口</label>
+                    <div class="actions">
+                        <input id="apiPort" name="apiPort" type="text" inputmode="numeric" aria-label="API 监听端口">
+                        <button type="button" data-confirm="apiPort">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="apiPassword">数据 API 密码</label>
+                    <div class="actions">
+                        <input id="apiPassword" name="apiPassword" type="password" autocomplete="new-password"
+                               placeholder="新密码">
+                        <button type="button" data-confirm="apiPassword">确认</button>
+                        <button type="button" data-clear="apiPassword" disabled>清除</button>
+                    </div>
+                </div>
+                <p class="note">密码可选。局域网连接使用未加密的 HTTP。</p>
+                <a id="api-url" class="endpoint" hidden></a>
+                <p id="api-status" class="note endpoint"></p>
+            </section>
+            <section class="card">
+                <h2>告警通知</h2>
+                <div class="setting-row">
+                    <label for="windowsNotifications">Windows 通知</label>
+                    <input id="windowsNotifications" name="windowsNotifications" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="webNotifications">浏览器通知</label>
+                    <input id="webNotifications" name="webNotifications" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <span id="notification-permission-status" class="note"></span>
+                    <button id="allow-notifications" type="button">授权此浏览器</button>
+                </div>
+                <div class="setting-row">
+                    <label for="webMuteLocal">静音 localhost 访问</label>
+                    <input id="webMuteLocal" name="webMuteLocal" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="webMuteIps">静音指定 IP 访问</label>
+                    <input id="webMuteIps" name="webMuteIps" type="checkbox" role="switch">
+                </div>
+                <div class="setting-row">
+                    <label for="webMutedAddresses">浏览器静音 IP 列表</label>
+                    <div class="actions">
+                        <textarea id="webMutedAddresses" name="webMutedAddresses" rows="3" maxlength="8192" placeholder="每行一个 IP 地址"></textarea>
+                        <button type="button" data-confirm="webMutedAddresses">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="cpuAlertCelsius">CPU 温度阈值 (°C)</label>
+                    <div class="actions">
+                        <input id="cpuAlertCelsius" name="cpuAlertCelsius" type="text" inputmode="numeric">
+                        <button type="button" data-confirm="cpuAlertCelsius">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="gpuAlertCelsius">GPU 温度阈值 (°C)</label>
+                    <div class="actions">
+                        <input id="gpuAlertCelsius" name="gpuAlertCelsius" type="text" inputmode="numeric">
+                        <button type="button" data-confirm="gpuAlertCelsius">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="diskAlertPercent">分区剩余空间阈值 (%)</label>
+                    <div class="actions">
+                        <input id="diskAlertPercent" name="diskAlertPercent" type="text" inputmode="numeric">
+                        <button type="button" data-confirm="diskAlertPercent">确认</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <label for="alertDelaySeconds">告警持续时间 (秒)</label>
+                    <div class="actions">
+                        <input id="alertDelaySeconds" name="alertDelaySeconds" type="text" inputmode="numeric">
+                        <button type="button" data-confirm="alertDelaySeconds">确认</button>
+                    </div>
+                </div>
+            </section>
+            <div class="settings-lock"><button id="lock-settings" type="button" disabled>锁定设置</button></div>
+        </form>
+    </main>
+</body>
+</html>

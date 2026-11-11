@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>性能概览 · MONY</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png">
+    <link rel="stylesheet" href="/full.css">
+    <script src="/locale-v4.js" defer></script>
+    <script src="/alerts-v2.js" defer></script>
+    <script src="/full.js" defer></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <script src="/pwa.js" defer></script>
+</head>
+<body class="instrument-page">
+    <a id="exit-full" class="glass-action" href="/" aria-label="打开首页" title="打开首页">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4m11-5v5h5m-5 11v-5h5m-11 5v-5H4"/></svg>
+    </a>
+    <p id="full-status" role="status" hidden></p>
+    <main id="viewport" aria-label="全屏性能仪表">
+        <div id="stage">
+            <div class="primary-deck">
+                <section class="cpu-instrument" id="cpu">
+                    <div class="section-label"><span>01</span><h1>处理器 <small>CPU</small></h1></div>
+                    <div class="tachometer">
+                        <svg class="dial" viewBox="0 0 480 360" aria-hidden="true"><path class="dial-track"/><path class="dial-progress"/><g class="dial-ticks"/><g class="dial-labels"/><line class="dial-cursor"/>
+                            <path class="frequency-track"/><path class="frequency-progress"/></svg>
+                        <div class="dial-readout"><span class="caption">使用率</span><p class="hero-value">—</p><span class="dial-unit">%</span></div>
+                        <div class="frequency-readout"><span class="caption">频率</span><p id="cpu-frequency">—</p></div>
+                    </div>
+                    <p class="device-detail"></p>
+                    <div class="cpu-telemetry"></div>
+                    <svg class="trend" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path class="baseline" d="M0 59H600"/><path class="primary"/></svg>
+                    <p class="trend-caption">最近 60 秒</p>
+                </section>
+                <section class="memory-instrument" id="memory">
+                    <div class="section-label"><span>02</span><h2>内存</h2></div>
+                    <p class="memory-value">—</p>
+                    <span class="caption">已用容量</span>
+                    <div class="capacity-scale" aria-hidden="true"><span>100</span><div class="fuel-segments"></div><span>0</span></div>
+                    <p class="device-detail"></p>
+                    <svg class="trend" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path class="baseline" d="M0 59H600"/><path class="primary"/></svg>
+                    <p class="trend-caption">最近 60 秒</p>
+                </section>
+                <section class="graphics-instruments">
+                    <div class="section-label"><span>03</span><h2>图形处理器</h2><span id="gpu-count" class="item-count"></span></div>
+                    <div id="gpu-list"></div>
+                    <p id="gpu-empty" class="caption">暂无可读取的 GPU</p>
+                </section>
+            </div>
+            <div class="systems-deck">
+                <section id="disks" class="system-module">
+                    <div class="section-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 13h18m-5 2h2"/></svg><h2>物理磁盘</h2><span id="disk-count" class="item-count"></span></div>
+                    <div id="disk-list"></div><p id="disk-empty" class="caption">暂无可读取的物理磁盘</p>
+                </section>
+                <section id="network" class="system-module">
+                    <div class="section-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v5H8zM3 16h6v5H3zm12 0h6v5h-6zM12 8v4m-6 4v-4h12v4"/></svg><h2>网络</h2></div>
+                    <div class="network-readouts"><p class="download">↓ —</p><p class="upload">↑ —</p></div>
+                    <p class="device-detail"></p>
+                    <svg class="trend" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path class="baseline" d="M0 59H600"/><path class="primary"/><path class="secondary"/></svg>
+                    <p class="trend-caption">最近 60 秒 · 动态量程</p>
+                </section>
+                <section id="volumes" class="system-module">
+                    <div class="section-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 10h18M8 5v14m4-5h5m-5 2h5"/></svg><h2>挂载分区</h2><span id="volume-count" class="item-count"></span></div>
+                    <div id="volume-list"></div><p id="volumes-empty" class="caption">暂无可读取的分区</p>
+                </section>
+            </div>
+            <footer><span>— 表示当前没有可用读数。温度与功耗依赖硬件驱动和权限。</span><span id="version"></span></footer>
+        </div>
+    </main>
+    <template id="gpu-template"><article class="gpu-instrument">
+        <div class="instrument-title"><h3></h3><p class="reading"></p></div><p class="device-detail"></p>
+        <div class="load-ruler" aria-hidden="true"></div><p class="telemetry"></p>
+        <svg class="trend" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path class="baseline" d="M0 59H600"/><path class="primary"/><path class="secondary"/></svg>
+    </article></template>
+    <template id="disk-template"><article class="disk-instrument">
+        <div class="instrument-title"><h3></h3><p class="reading"></p></div><p class="device-detail"></p><p class="telemetry"></p>
+        <svg class="trend" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path class="primary"/><path class="secondary"/><path class="tertiary"/></svg>
+    </article></template>
+    <template id="volume-template"><article class="volume-instrument">
+        <div class="volume-heading"><h3></h3><span class="caption volume-capacity"></span></div>
+        <progress max="100"></progress>
+        <p class="volume-usage"></p>
+    </article></template>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="MONY" Manufacturer="MONY" Version="$(AppVersion)"
+           UpgradeCode="858366C1-EBBC-4319-B18F-1378D05D396A" Scope="perUser"
+           InstallerVersion="500" Compressed="yes" Language="2052" Codepage="936">
+    <SummaryInformation Description="MONY - Windows performance monitor (x64)" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" Schedule="afterInstallInitialize" DowngradeErrorMessage="已安装更高版本的 MONY。" />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="low" />
+
+    <Property Id="WINDOWSBUILD" Secure="yes">
+      <RegistrySearch Id="WindowsBuild" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+                      Name="CurrentBuildNumber" Type="raw" Bitness="always64" />
+    </Property>
+    <Launch Condition="Installed OR (VersionNT64 AND WINDOWSBUILD &gt;= 22000)"
+            Message="MONY 需要 Windows 11 x64（内部版本 22000 或更高）。" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPPRODUCTICON" Value="MONY.ico" />
+    <Icon Id="MONY.ico" SourceFile="$(ProjectRoot)\src\MONY\Assets\MONY.ico" />
+
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="UserPrograms" Name="Programs">
+        <Directory Id="INSTALLFOLDER" Name="MONY" />
+      </Directory>
+    </StandardDirectory>
+    <StandardDirectory Id="ProgramMenuFolder" />
+
+    <StandardDirectory Id="StartupFolder" />
+
+    <SetProperty Id="StartupCleanupFolder" Value="[StartupFolder]" Action="UseStartupCleanupFolder"
+                 Before="RemoveFiles" Sequence="execute" Condition="REMOVE=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE" />
+    <SetProperty Id="StartupCleanupFolder" Value="[INSTALLFOLDER]" Action="UseInstallCleanupFolder"
+                 Before="RemoveFiles" Sequence="execute" Condition="UPGRADINGPRODUCTCODE" />
+
+    <Component Id="Application" Directory="INSTALLFOLDER" Guid="66E56DD7-5987-4B80-A16B-00150ACFF7E7" Bitness="always64">
+      <File Id="MONYExe" Source="$(PayloadDir)\MONY.exe" />
+      <File Id="ThirdPartyNotices" Source="$(PayloadDir)\ThirdPartyNotices.txt" />
+      <File Id="PawnIoSetup" Source="$(PawnIoInstaller)" />
+      <File Id="PawnIoSource" Source="$(ProjectRoot)\installer\vendor\PawnIO-2.2.0-source.tar.gz" />
+      <RemoveFolder Id="RemoveInstallFolder" On="uninstall" />
+      <RegistryValue Root="HKCU" Key="Software\MONY" Name="InstalledVersion" Type="string" Value="$(AppVersion)" KeyPath="yes" />
+      <RemoveFile Id="RemoveStartupShortcut" Name="MONY Startup.lnk" Property="StartupCleanupFolder" On="uninstall" />
+    </Component>
+    <Component Id="StartMenu" Directory="ProgramMenuFolder" Guid="62FF055E-6127-45F7-91D4-8E4FB6C41612" Bitness="always64">
+      <Shortcut Id="StartMenuShortcut" Name="MONY" Description="电脑性能实时监控"
+                Target="[#MONYExe]" WorkingDirectory="INSTALLFOLDER" Icon="MONY.ico" />
+      <RegistryValue Root="HKCU" Key="Software\MONY" Name="MONYStartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+    <Feature Id="Main" Title="MONY" Level="1">
+      <ComponentRef Id="Application" />
+      <ComponentRef Id="StartMenu" />
+    </Feature>
+  </Package>
+</Wix>

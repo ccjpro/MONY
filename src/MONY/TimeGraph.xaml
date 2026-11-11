@@ -1,0 +1,22 @@
+<UserControl
+    x:Class="MONY.TimeGraph"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    IsHitTestVisible="False">
+    <Grid>
+        <Grid x:Name="GraphGrid" RowDefinitions="*,*,*,*">
+            <Border Grid.Row="0" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" />
+            <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" />
+            <Border Grid.Row="2" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" />
+            <Border Grid.Row="3" BorderThickness="0,1,0,1" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" />
+        </Grid>
+        <Border x:Name="InstrumentBaseline" VerticalAlignment="Bottom" BorderThickness="0,0,0,1"
+                BorderBrush="{ThemeResource InstrumentLine}" Visibility="Collapsed" />
+        <Canvas>
+            <Path x:Name="Area" Fill="{ThemeResource AccentFillColorDefaultBrush}" Opacity="0.13" />
+            <Path x:Name="PrimaryLine" Stroke="{ThemeResource AccentFillColorDefaultBrush}" StrokeThickness="2" />
+            <Path x:Name="SecondaryLine" Stroke="{ThemeResource SystemFillColorSuccessBrush}" StrokeThickness="2" />
+            <Path x:Name="TertiaryLine" Stroke="{ThemeResource TrendTertiaryBrush}" StrokeThickness="2" />
+        </Canvas>
+    </Grid>
+</UserControl>

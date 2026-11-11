@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MONY</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-v2.png">
+    <link rel="stylesheet" href="/overview-v5.css">
+    <script src="/locale-v4.js" defer></script>
+    <script src="/alerts-v2.js" defer></script>
+    <script src="/overview-v4.js" defer></script>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <script src="/pwa.js" defer></script>
+</head>
+<body>
+    <main class="dashboard">
+        <div class="heading">
+            <div>
+                <div class="dashboard-brand"><img src="/brand.svg" alt="" width="16" height="16"> <span>MONY</span></div>
+                <div class="overview-line">
+                    <h1>性能概览</h1>
+                    <span class="target-picker">
+                        <span id="target-label" aria-hidden="true">此电脑</span>
+                        <select id="device-identity" aria-label="监控目标" disabled><option value="local">此电脑</option></select>
+                    </span>
+                    <span id="sample-time" hidden></span>
+                </div>
+                <p class="status" role="status" hidden><span id="status"></span></p>
+            </div>
+            <div class="actions" aria-label="视图操作">
+                <button id="pause" type="button" disabled>
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14"/></svg>
+                    <span class="button-label sr-only">暂停</span>
+                </button>
+                <a class="button" href="/settings" aria-label="设置"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7ZM3 9l2.6-.7L7 6l-.6-2.5 3.4-1.2L11.5 4h2L15 2.3l3.4 1.2L17.8 6l1.5 2.3L22 9v4l-2.7.7-1.5 2.3.6 2.5-3.4 1.3L13.5 18h-2l-1.7 1.8-3.4-1.3.6-2.5-1.4-2.3L3 13Z"/></svg></a>
+            </div>
+        </div>
+        <div class="metrics" id="loading-metrics" aria-label="等待性能数据" aria-busy="true">
+            <section class="card skeleton"><h2>处理器 (CPU)</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+            <section class="card skeleton"><h2>内存</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+            <section class="card skeleton"><h2>GPU</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+            <section class="card skeleton"><h2>磁盘</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+            <section class="card skeleton"><h2>网络</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+            <section class="card skeleton"><h2>已挂载分区</h2><div class="skeleton-content" aria-hidden="true"></div></section>
+        </div>
+        <div class="metrics" id="metrics" hidden>
+            <section class="card volumes" aria-labelledby="volumes-heading">
+                <h2 id="volumes-heading"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 10h18M8 5v14m4-5h5m-5 2h5"/></svg>已挂载分区 <span id="volume-count"></span></h2>
+                <p id="volumes-empty">暂无可读取的分区</p>
+                <div id="volume-rows"></div>
+            </section>
+        </div>
+        <footer><p>— 表示当前没有可用读数。部分温度和功耗传感器依赖硬件驱动与权限。</p></footer>
+    </main>
+    <template id="volume-row">
+        <div class="volume-row">
+            <div class="volume-heading">
+                <p class="volume-name"></p><span class="volume-capacity"></span>
+            </div>
+            <progress max="100"></progress>
+            <p class="volume-usage"></p>
+        </div>
+    </template>
+    <template id="card">
+        <section class="card">
+            <h2><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path/></svg><span class="metric-title"></span></h2>
+            <p class="value"></p>
+            <p class="detail"></p>
+            <p class="telemetry" hidden></p>
+            <svg class="chart" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true">
+                <path class="grid" d="M0 .5H600M0 15H600M0 30H600M0 45H600M0 59.5H600"/>
+                <path class="area"/>
+                <path class="primary"/>
+                <path class="secondary"/>
+                <path class="tertiary"/>
+            </svg>
+        </section>
+    </template>
+</body>
+</html>

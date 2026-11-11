@@ -1,0 +1,5 @@
+.work/
+**/obj/
+**/bin/
+dist/
+/installer/vendor/PawnIO_setup.exe

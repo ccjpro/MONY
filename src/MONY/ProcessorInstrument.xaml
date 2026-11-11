@@ -1,0 +1,31 @@
+<UserControl x:Class="MONY.ProcessorInstrument"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MONY">
+    <Grid RowDefinitions="Auto,*,Auto,Auto,Auto,Auto" RowSpacing="10">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Text="01" FontSize="10" Foreground="{ThemeResource InstrumentMuted}" VerticalAlignment="Center" />
+            <TextBlock Text="处理器" FontSize="14" FontWeight="SemiBold" AutomationProperties.HeadingLevel="Level1" />
+            <TextBlock Text="CPU" FontSize="11" Foreground="{ThemeResource InstrumentMuted}" VerticalAlignment="Center" />
+        </StackPanel>
+        <Viewbox Grid.Row="1" Stretch="Uniform">
+            <Canvas Width="480" Height="360">
+                <Polyline x:Name="Track" Stroke="{ThemeResource InstrumentLine}" StrokeThickness="3" />
+                <Polyline x:Name="Arc" Stroke="{ThemeResource InstrumentAccent}" StrokeThickness="3" />
+                <Canvas x:Name="Ticks" />
+                <Line x:Name="Cursor" Stroke="{ThemeResource InstrumentAccent}" StrokeThickness="3" />
+                <TextBlock Text="使用率" Canvas.Top="110" Width="480" TextAlignment="Center" FontSize="11" Foreground="{ThemeResource InstrumentMuted}" />
+                <TextBlock x:Name="Value" Canvas.Top="119" Width="480" TextAlignment="Center" FontSize="76" FontWeight="Light" />
+                <TextBlock x:Name="Unit" Text="%" Canvas.Top="204" Width="480" TextAlignment="Center" FontSize="14" Foreground="{ThemeResource InstrumentMuted}" />
+                <Polyline x:Name="FrequencyTrack" Stroke="{ThemeResource InstrumentLine}" StrokeThickness="2" />
+                <Polyline x:Name="FrequencyArc" Stroke="{ThemeResource InstrumentAccent}" StrokeThickness="3" />
+                <TextBlock Text="频率" Canvas.Top="239" Width="480" TextAlignment="Center" FontSize="10" Foreground="{ThemeResource InstrumentMuted}" />
+                <TextBlock x:Name="FrequencyValue" Canvas.Top="253" Width="480" TextAlignment="Center" FontSize="17" />
+            </Canvas>
+        </Viewbox>
+        <TextBlock x:Name="Detail" Grid.Row="2" FontSize="12" TextWrapping="Wrap" Foreground="{ThemeResource InstrumentMuted}" />
+        <Grid x:Name="Readings" Grid.Row="3" ColumnSpacing="14" />
+        <local:TimeGraph x:Name="Trend" Grid.Row="4" Height="42" AutomationProperties.AccessibilityView="Raw" />
+        <TextBlock Grid.Row="5" Text="最近 60 秒" FontSize="10" Foreground="{ThemeResource InstrumentMuted}" />
+    </Grid>
+</UserControl>
