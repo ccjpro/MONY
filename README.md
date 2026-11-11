@@ -1,6 +1,6 @@
 # MONY
 
-Windows 11 x64 实时性能监控。安装发布页的 `MONY-*-x64.msi`。
+Windows 11 x64 实时性能监控。安装发布页的 `MONY-*-x64.msi`。[演示网站 Demo](https://mony.ccjccj.eu.org/)
 
 ## 截图
 
