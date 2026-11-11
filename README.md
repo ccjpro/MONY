@@ -1,39 +1,41 @@
 # MONY
 
-Windows 11 x64 实时性能监控。安装发布页的 `MONY-*-x64.msi`。[演示网站 Demo](https://mony.ccjccj.eu.org/)
+English | [简体中文](README-CN.md)
 
-## 截图
+Real-time performance monitoring for Windows 11 x64. Install `MONY-*-x64.msi` from the releases page. [Live demo](https://mony.ccjccj.eu.org/)
 
-以下为 MONY 网页界面，使用演示数据。
+## Screenshots
 
-![MONY 网页性能概览](docs/web-overview.png)
+The MONY web interface with simulated data.
 
-![MONY 全屏仪表盘](docs/web-full.png)
+![MONY web performance overview](docs/web-overview-en.png)
 
-## 功能
+![MONY full-screen dashboard](docs/web-full-en.png)
 
-- 每秒采样 CPU、内存、各 GPU、物理磁盘、网络和挂载分区，保留最近 60 秒趋势。CPU 温度与封装功耗可在桌面授权 PawnIO 后读取。
-- 支持托盘驻留、登录自启、全屏仪表盘和简体中文／英文。可连接其他 MONY 实例，网页通过本机转发所选目标的数据。
-- 网页支持 PWA。概览、全屏、切换目标和暂停可直接使用。网页设置可选密码、24 小时 Cookie 和手动锁定。
-- Windows 和浏览器告警可独立启用，支持 CPU／GPU 温度、分区空间、远端断线及 5 分钟冷却。浏览器可按 localhost 或指定 IP 静音。
+## Features
+
+- Samples the CPU, memory, individual GPUs, physical disks, network, and mounted volumes every second, with 60 seconds of history. Authorize PawnIO in the desktop app to read CPU temperature and package power.
+- Supports tray operation, startup at sign-in, a full-screen dashboard, and Simplified Chinese and English. Connect to other MONY instances and switch the monitored computer. The web interface retrieves remote data through the local MONY instance.
+- The web dashboard can be installed as a PWA. The overview, full-screen dashboard, target switching, and pause controls are available without signing in. Web settings support an optional password, a 24-hour cookie, and manual locking.
+- Enable Windows and browser alerts independently for CPU or GPU temperature, low disk space, and remote disconnections. Alerts have a five-minute cooldown. Browser notifications can be muted for localhost or specific IP addresses.
 
 ## API
 
-| 默认端口 | 路径 | 返回 |
+| Default port | Endpoint | Response |
 | --- | --- | --- |
-| 2727 | `GET /api/data`（或 `GET /`） | 本机原始采样 |
+| 2727 | `GET /api/data` or `GET /` | Raw samples from the local computer |
 
-两项服务默认仅监听本机，可独立调整端口和开启局域网访问。数据 API 配置密码后使用 HTTP Basic，用户名为 `pulse`。网页设置密码独立于数据 API。
+The web and data services listen on localhost by default. Each has its own port and LAN access setting. When an API password is set, use HTTP Basic authentication with the username `pulse`. The web settings password is separate.
 
 ```powershell
 curl.exe http://127.0.0.1:2727/api/data
 curl.exe --user pulse http://127.0.0.1:2727/api/data
 ```
 
-两类响应均含 `version`。`/api/data` 还返回 `computerName`、`computerIp`、`paused`、`cpuDetails` 和 `sample`。采样包括 `time`、CPU 和内存读数、`gpus`、`disks`、`volumes`、`download` 与 `upload`。首次采样前 `sample` 为 `null`，不可用的读数也为 `null`。原始数值使用 MHz、°C、W、B、B/s 和 0–100 百分比。
+The response includes `version`, `computerName`, `computerIp`, `paused`, `cpuDetails`, and `sample`. The sample includes `time`, CPU and memory readings, `gpus`, `disks`, `volumes`, `download`, and `upload`. Before the first reading, `sample` is `null`. Unavailable readings are also `null`. Units are MHz, °C, W, bytes, bytes per second, and percentages from 0 to 100.
 
-## 构建
+## Build
 
-在 Windows 安装 .NET 10 SDK 与 WiX 5 后运行 `.\tools\build-msi.ps1`，MSI 输出到 `dist/`。脚本会校验 [PawnIO 2.2.0 官方安装器](https://github.com/namazso/PawnIO.Setup/releases/tag/2.2.0) 的 SHA-256。缺少 `installer/vendor/PawnIO_setup.exe` 时自动下载。
+Install the .NET 10 SDK and WiX 5 on Windows, then run `.\tools\build-msi.ps1`. The MSI is written to `dist/`. The script verifies the SHA-256 of the [official PawnIO 2.2.0 installer](https://github.com/namazso/PawnIO.Setup/releases/tag/2.2.0) and downloads it if `installer/vendor/PawnIO_setup.exe` is missing.
 
-[更新记录](CHANGELOG.md) · [第三方许可](installer/licenses)
+[Changelog](CHANGELOG.md) · [Third-party licenses](installer/licenses)
