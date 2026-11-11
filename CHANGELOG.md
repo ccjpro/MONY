@@ -14,27 +14,39 @@
 
 - 网页设置保留 24 小时 Cookie 和手动锁定。<br>
   Web settings retain a 24-hour cookie and support manual locking.
+
+## 1.5.6
+
 - 新增 Windows 和浏览器告警、阈值与持续时间设置，以及按 localhost 或指定 IP 静音。<br>
   Added Windows and browser alerts, configurable thresholds and durations, and notification muting for localhost or specific IP addresses.
 
-## 1.5.2
+## 1.5.5
 
 - CPU 采集授权跨重启保留，可在桌面撤销。<br>
   CPU monitoring authorization persists across restarts and can be revoked in the desktop app.
+
+## 1.5.4
+
 - 全屏仪表新增 CPU 频率，修复语言切换后部分文本未立即更新的问题。<br>
   Added CPU frequency to the full-screen dashboard and fixed text that did not immediately update after switching languages.
 
-## 1.5.1
+## 1.5.3
 
 - 安装包集成 PawnIO，首次授权 CPU 采集时自动安装。<br>
   Bundled PawnIO in the installer. It installs automatically the first time CPU monitoring is authorized.
+
+## 1.5.2
+
 - 支持简体中文与英文，可手动切换。远端连接支持填写 IP、端口和可选密码。<br>
   Added Simplified Chinese and English with manual language switching. Remote connections accept an IP address, port, and optional password.
 
-## 1.5.0
+## 1.5.1
 
 - 支持连接其他实例的 API 并切换目标，网页由本机转发数据。<br>
   Added remote API connections and target switching. The local instance relays data to the web interface.
+
+## 1.5.0
+
 - 分区容量以 1024 为进制换算。<br>
   Volume capacities use base-1024 units.
 
