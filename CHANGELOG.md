@@ -38,24 +38,27 @@
 - 分区容量以 1024 为进制换算。<br>
   Volume capacities use base-1024 units.
 
-## 1.4.7
+## 1.4.5
 
 - 支持通过 UAC 单独授权 CPU 温度和封装功耗采集。<br>
   Added separate UAC authorization for CPU temperature and package power monitoring.
+
+## 1.4.4
+
 - 分区显示已用及剩余容量。<br>
   Volumes show used and free space.
 
-## 1.4.6
+## 1.4.3
 
 - 网页支持安装为 PWA。<br>
   The web dashboard can be installed as a PWA.
 
-## 1.4.4
+## 1.4.2
 
 - 新增共享显存显示开关。<br>
   Added a toggle for shared GPU memory.
 
-## 1.4.2
+## 1.4.1
 
 - 支持从桌面全屏进入设置并返回原状态。<br>
   Settings can be opened from the desktop full-screen dashboard, which is restored when leaving settings.
@@ -65,24 +68,33 @@
 - 新增桌面全屏仪表盘和网页 `/full`。<br>
   Added the desktop full-screen dashboard and the web `/full` page.
 
-## 1.3.4
+## 1.3.7
 
 - GPU 趋势加入专用显存用量，物理磁盘趋势加入读写速率。<br>
   Added dedicated GPU memory usage and physical disk read and write rates to the charts.
+
+## 1.3.6
+
 - 设置与数据 API 返回应用版本。<br>
   The settings page and data API report the application version.
 
-## 1.3.3
+## 1.3.5
 
 - Web 和数据 API 支持独立配置监听端口。<br>
   The web and data APIs can use independently configured listening ports.
 
-## 1.3.2
+## 1.3.4
 
 - 两项服务支持可选密码，登录 Cookie 有效 24 小时。<br>
   Both services support optional passwords. Login cookies are valid for 24 hours.
+
+## 1.3.3
+
 - 增加挂载分区的盘符、卷名及容量，数据 API 同步返回分区数据。<br>
   Added drive letters, volume labels, and capacities for mounted volumes to the app and data API.
+
+## 1.3.2
+
 - 修复 Safari 网页图标兼容性。<br>
   Fixed Safari compatibility for web icons.
 
@@ -95,6 +107,9 @@
 
 - 新增可配置的 Web 和数据 API 服务，支持局域网访问和认证。<br>
   Added configurable web and data API services with LAN access and authentication.
+
+## 1.2.1
+
 - 增加设备名称、标识 IP、主题和窗口行为设置。<br>
   Added settings for device name, identifying IP address, theme, and window behavior.
 
