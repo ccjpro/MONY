@@ -2,6 +2,14 @@
 
 Windows 11 x64 实时性能监控。安装发布页的 `MONY-*-x64.msi`。
 
+## 截图
+
+以下为 MONY 网页界面，使用演示数据。
+
+![MONY 网页性能概览](docs/web-overview.png)
+
+![MONY 全屏仪表盘](docs/web-full.png)
+
 ## 功能
 
 - 每秒采样 CPU、内存、各 GPU、物理磁盘、网络和挂载分区，保留最近 60 秒趋势。CPU 温度与封装功耗可在桌面授权 PawnIO 后读取。
